@@ -1,0 +1,17 @@
+apigouvfr:
+  ports:
+  - 4000:4000/tcp
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.container.pull_image: always
+  tty: true
+  image: mcas/apigouvfr:latest
+  stdin_open: true
+LB-FC:
+  ports:
+  - 80:4000
+  tty: true
+  image: rancher/load-balancer-service
+  links:
+  - apigouvfr:apigouvfr
+  stdin_open: true
