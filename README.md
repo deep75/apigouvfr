@@ -1,6 +1,6 @@
 # api.gouv.fr
 
-> Le site public listant les API au sein du Système d'Information des Services Publics Français
+> Le site public listant les API au sein de l'Etat Plate-forme
 
 
 Pour lancer cette image il suffit par exemple de lancer cette commande :
