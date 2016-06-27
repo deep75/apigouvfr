@@ -7,7 +7,7 @@ apigouvfr:
   tty: true
   image: mcas/apigouvfr:latest
   stdin_open: true
-LB-FC:
+LB-APIGOUVFR:
   ports:
   - 80:4000
   tty: true
