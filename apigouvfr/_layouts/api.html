@@ -1,0 +1,173 @@
+---
+layout: default
+---
+
+<section id="mission-statement" class="ui vertical center aligned segment {{ page.category }}">
+
+  <div class="ui container">
+    <div class="ui grid">
+      <div class="twelve wide centered column">
+        <h1 class="ui inverted header">
+          {% assign category = site.api_category | where:"id", page.category | first %}
+          <i class="{{ category.logo }} icon"></i>{{ page.title }}
+        </h1>
+        <h2 class="ui inverted header">
+          {{ page.tagline }}
+        </h2>
+        {% if page.doc_tech %}
+        <a class="large ui secondary button" href="{{ page.doc_tech }}" target="_blank">
+          Documentation technique &nbsp;&nbsp;<i class="code icon"></i>
+        </a>
+        {% endif %}
+        {% if page.access_link %}
+        <a class="large ui secondary button" href="{{ page.access_link }}" target="_blank">
+          Demandez l'accès &nbsp;&nbsp;
+          <i class="ticket icon"></i>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div id="description" class="ui container">
+  <div class="ui mobile reversed stackable grid">
+    <div class="four wide column">
+      <div class="ui segment">
+        {% if page.experimental %}
+        <div class="ui yellow left ribbon label" >
+          Expérimentale
+        </div>
+        {% else %}
+        <div class="ui green left ribbon label">
+          Stable
+        </div>
+        {% endif %}
+        <div class="ui relaxed divided list metadata">
+          <div class="item logoWrapper">
+            <div class="ui small image">
+              <img src="{{ page.logo }}" alt="{{ page.title }}" />
+            </div>
+          </div>
+          {% if page.stat.url %}
+            <div class="item">
+              <div class="content stat">
+                <div class="header">Lors des {{ page.stat.lastXdays }} derniers jours :</div>
+                <div class="description">
+                  <div class="ui statistic">
+                    <div class="value">
+                      -
+                    </div>
+                    <div class="label">
+                      {{ page.stat.label }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          <div class="item">
+            <div class="content">
+              <div class="header">Conditions d'utilisation</div>
+              <div class="description">
+                {% if page.contract == "OUVERT sous contrat"%}
+                  {{ page.contract }} au :
+                    <ul>
+                      {% for client in page.clients %}
+                        <li>{{ client }}</li>
+                      {% endfor%}
+                    </ul>
+                {% else %}
+                  {{ page.contract }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% if page.partners %}
+          <div class="item">
+            <div class="content">
+              <div class="header">Sources et partenaires</div>
+              <div class="description">
+                {{ page.partners | join: ' - ' }}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="twelve wide column">
+      <div class="ui secondary pointing menu">
+        <a class="item active" data-tab="funk">Description</a>
+        <a class="item" data-tab="tech">Technique</a>
+      </div>
+      <div class="ui active tab" data-tab="funk">
+        <section class="markdown-body">
+          {{ content }}
+        </section>
+      </div>
+      <div class="ui tab" data-tab="tech">
+        {% if page.openapi_definition %}
+          <section class="ui container">
+            {% include swagger.html %}
+          </section>
+        {% else %}
+          <p>
+            Vous pouvez retrouver la documentation technique sur <a href="{{ page.doc_tech }}" target="_blank">le site de l'API</a>
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% capture serviceHtml %}
+  {% for service in site.service %}
+    {% if service.api contains page.title%}
+      {% include service-card.html service=service %}
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+{% assign serviceHtmlWithoutSpace = serviceHtml | strip_newlines | strip %}
+{% if serviceHtmlWithoutSpace != "" %}
+<section id="services" class="ui container">
+  <h2 class="ui divider horizontal">Les services</h2>
+  <div class="ui two stackable cards">
+    {{ serviceHtml }}
+  </div>
+</section>
+{% endif %}
+
+
+<script>
+  $(function() {
+    $('.menu .item').tab();
+    {% if page.stat.url %}
+      var $divStat = $( ".statistic .value" )
+      $.get( "{{ page.stat.url }}", function( data ) {
+        {% if page.stat.path %}
+          data = data["{{ page.stat.path | join: '"]["' }}"]
+        {% endif %}
+        var step = Math.round(data / 15);
+        incrementValue(0, data, step)()
+      });
+      function incrementValue(current, max, step) {
+        return function() {
+          printStat(current)
+          step = isCounterOverflowing(current, step, max) ? max - current : step;
+          if(current < max) {
+            setTimeout(incrementValue(current + step, max, step), 60)
+          }
+        }
+      }
+      function printStat(data) {
+        $divStat.text( parseInt( data ).toLocaleString('fr-FR') );
+      }
+
+      function isCounterOverflowing(current, step, max) {
+        return current + step >= max
+      }
+    {% endif %}
+  });
+</script>

@@ -1,0 +1,121 @@
+---
+# API pages style
+---
+
+@import "variables";
+@import "markdown";
+@import "mixins";
+@import "service";
+
+
+#mission-statement {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  margin-bottom: 2%;
+  h1 {
+    padding: .2em 0;
+    font-size: 200%;
+    line-height: 1.8;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    i.icon {
+      height: inherit;
+    }
+  }
+
+  h2 {
+    padding: .2em 0;
+    font-size: 150%;
+    line-height: 1.4;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  &.confidential {
+    @include linearBackground($confidential-color);
+  }
+
+  &.reference {
+    @include linearBackground($reference-color);
+  }
+
+  &.simulation {
+    @include linearBackground($simulation-color);
+  }
+
+  &.smartData {
+    @include linearBackground($smartData-color);
+  }
+}
+#description {
+  .metadata {
+    margin-top: -1em;
+    z-index: -200;
+
+    ul {
+      margin-top: 0.3em;
+      margin-bottom: 0.6em;
+    }
+  }
+
+  .ribbon {
+    z-index: 200;
+  }
+
+  .logoWrapper {
+    text-align: center;
+  }
+  .markdown-body {
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+  .menu {
+    margin-bottom: 2em;
+    .item {
+      font-size: 1.2em;
+    }
+  }
+  .swagger-section {
+    .info_title {
+      display: none;
+    }
+  }
+
+  #validator {
+    display: none
+  }
+  .ui.statistic {
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
+    &>.value {
+        font-size: 3rem;
+    }
+  }
+}
+#callToAction {
+  margin-top: 3%;
+  padding-top: 3%;
+  padding-bottom: 2%;
+
+  &.confidential {
+    @include linearBackground($confidential-color);
+  }
+
+  &.reference {
+    @include linearBackground($reference-color);
+  }
+
+  &.simulation {
+    @include linearBackground($simulation-color);
+  }
+
+  &.smartData {
+    @include linearBackground($smartData-color);
+  }
+}
+
+#services {
+  margin-bottom: 3em;
+}

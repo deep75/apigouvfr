@@ -1,0 +1,55 @@
+---
+# Main pages style
+---
+
+@import "variables";
+
+#wrapper {
+	min-height: 100%;
+	position: relative;
+}
+
+#page {
+	padding-bottom: 10rem;
+}
+
+header {
+	background-image: url({{ site.baseurl }}/img/marianne.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: .8em;
+	background-color: #FEFEFE;
+	color: #555;
+	height: 2.4em;
+
+	img {
+		float: right;
+		margin-top: .1em;
+		height: 80%;
+		margin-right: .8em;
+	}
+}
+
+main {
+	margin-bottom: 3em;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 10rem;
+	padding: 1.5em 0;
+	background-color: #f8f8f8;
+
+	.incubateur {
+		text-align: center;
+	}
+}
+
+input:focus::-webkit-input-placeholder{
+    color: transparent!important;
+}
+input:focus::-moz-placeholder{
+    color: transparent!important;
+}
