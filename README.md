@@ -20,7 +20,7 @@ RUN gem install github-pages --no-ri --no-rdoc
 
 WORKDIR /opt/site
 
-ADD api.gouv.fr /opt/site/
+ADD apigouvfr /opt/site/
 
 EXPOSE 4000
 
